@@ -14,7 +14,7 @@ public class ServerMain {
 		
 		ServerContextSettings properties = new ServerContextSettings(args);
 		
-		LogManager.getLogger().info("Server options has been inipialized : {}", properties);
+		LogManager.getLogger().info("Server options has been initialized : {}", properties);
 		
 		try(ServerContext context = new ServerContext(properties)) {
 			

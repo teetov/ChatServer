@@ -7,7 +7,7 @@
 			</PatternLayout>
 		</Console>
 		<RollingFile name="RollingFile" fileName="logs/chat.log"
-			filePattern="logs/chat-%d{dd-MM-yyyy}.log" ignoreException="false">
+			filePattern="logs/chat-%d{dd-MM-yyyy}.log">
 			<PatternLayout>
 				<PatterN>%d [%t] %c{2} : %msg %ex%n</PatterN>
 			</PatternLayout>
@@ -20,7 +20,7 @@
 	</Appenders>
 	<Loggers>
 		<Root level="ALL">
-			<AppenderRef ref="Sout" />
+			<AppenderRef ref="RollingFile" />
 		</Root>
 	</Loggers>
 </Configuration>

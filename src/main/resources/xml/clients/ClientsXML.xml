@@ -2,15 +2,15 @@
 <clients xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="ClientsXMLSchema.xsd">
 	<client>
-		<name>Igor</name>
-		<password>6117</password>
+		<name>User1</name>
+		<password>1234</password>
 	</client>
 	<client>
-		<name>Igor2</name>
-		<password>6117</password>
+		<name>User2</name>
+		<password>qwerty</password>
 	</client>
 	<client>
-		<name>Igor3</name>
-		<password>6117</password>
+		<name>User3</name>
+		<password>111</password>
 	</client>
 </clients>
