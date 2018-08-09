@@ -20,7 +20,10 @@
 	</Appenders>
 	<Loggers>
 		<Root level="ALL">
-			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="Sout" />
 		</Root>
+		<Logger level="All" name="com.teetov.server">
+			<AppenderRef ref="RollingFile" />
+		</Logger>
 	</Loggers>
 </Configuration>
