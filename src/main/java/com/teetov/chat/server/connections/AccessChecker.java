@@ -3,9 +3,9 @@ package com.teetov.chat.server.connections;
 import java.util.EnumSet;
 import java.util.Set;
 
-import com.teetov.chat.server.clientbase.ClientsBaseNotFound;
-import com.teetov.chat.server.clientbase.ClientsChecker;
-import com.teetov.chat.server.clientbase.ClientsCheckerProducer;
+import com.teetov.chat.server.clientbase.ClientbaseException;
+import com.teetov.chat.server.clientbase.ClientValidator;
+import com.teetov.chat.server.clientbase.ClientValidatorFactory;
 import com.teetov.chat.server.context.ServerContext;
 
 /**
@@ -16,7 +16,7 @@ import com.teetov.chat.server.context.ServerContext;
 public class AccessChecker {
     
     private ServerContext context;
-    private ClientsCheckerProducer clientsProducer;
+    private ClientValidatorFactory clientsProducer;
     
     private int attemptCount = 0;
     
@@ -42,7 +42,7 @@ public class AccessChecker {
     
     private Set<Problem> problems = EnumSet.noneOf(Problem.class);
     
-    public AccessChecker(ServerContext context, ClientsCheckerProducer clientsProducer) {
+    public AccessChecker(ServerContext context, ClientValidatorFactory clientsProducer) {
         this.context = context;
         this.clientsProducer = clientsProducer;
     }
@@ -85,12 +85,12 @@ public class AccessChecker {
      * @param password - пароль клиента
      * @return {@code true} если проверка успешно пройдена
      * 
-     * @throws ClientsBaseNotFound
+     * @throws ClientbaseException
      */
-    public boolean correctLogin(String login, String password) throws ClientsBaseNotFound{
+    public boolean correctLogin(String login, String password) throws ClientbaseException{
         boolean result = true;
         
-        ClientsChecker clients = clientsProducer.getClientsChecker();
+        ClientValidator clients = clientsProducer.getClientValidator();
         
         if(context.getConnectionsManager().getActiveNameSet().contains(login)) {
             problems.add(Problem.NAME_TAKEN);

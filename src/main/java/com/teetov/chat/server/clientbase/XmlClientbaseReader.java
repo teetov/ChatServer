@@ -1,5 +1,6 @@
 package com.teetov.chat.server.clientbase;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,50 +11,43 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class ClientsCheckerXML implements ClientsChecker{
-    private Map<String, String> users = new HashMap<>();
+public class XmlClientbaseReader {
+
+    private InputStream source;
     
-    private String pathXml = ClientsCheckerXML.class.getResource("/xml/clients/ClientsXML.xml").toString();
-    
-    public ClientsCheckerXML() throws ClientsBaseNotFound {            
-        readXML();
-    }
-    
-    @Override
-    public boolean isCorrectPassword(String name, String password) {
-        String pass = users.get(name);
-        if(pass != null) {
-            if(pass.equals(password))
-                return true;
-        }
-        return false;
-    }
-    
-    @Override
-    public boolean isCorrectName(String name) {
-        return users.containsKey(name);
+    public XmlClientbaseReader(InputStream is) {
+        source = is;
     }
     
     /**
-     * Читает XML-файл со списком логинов и паролей клиентов в Map<String, String> users;
+     * Читает XML-файл со списком логинов и паролей клиентов;
      * 
-     * @throws ClientsBaseNotFound
+     * 
+     * @throws ClientbaseException
      */
-    private void readXML() throws ClientsBaseNotFound {
+    public Map<String, String> getClientBase() throws ClientbaseException {
+        Map<String, String> users = new HashMap<>();
+        DefaultHandler handler = getDefaultHandler(users);
         
-        DefaultHandler handler = getDefaultHandler();
+        parse(handler);
+        
+        return users;
+    }
+
+    private void parse(DefaultHandler handler) throws ClientbaseException {
 
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
-            
-            parser.parse(pathXml, handler);            
+
+            parser.parse(source, handler);            
         } catch (Exception e) {
-            throw new ClientsBaseNotFound(e);
-        } 
+            throw new ClientbaseException("Client base not valid",e);
+        }
+
     }
 
-    private DefaultHandler getDefaultHandler() {
+    private DefaultHandler getDefaultHandler(final Map<String, String> users) {
         return new DefaultHandler() {
 
             String name;

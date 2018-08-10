@@ -6,7 +6,7 @@ import java.net.ServerSocket;
 
 import com.teetov.chat.message.Message;
 import com.teetov.chat.message.MessageFactory;
-import com.teetov.chat.server.clientbase.ClientsCheckerProducer;
+import com.teetov.chat.server.clientbase.ClientValidatorFactory;
 import com.teetov.chat.server.connections.AccessChecker;
 import com.teetov.chat.server.connections.ClientListener;
 import com.teetov.chat.server.connections.ConnectionThread;
@@ -29,7 +29,7 @@ public class ServerContext implements Closeable {
 
     private ClientListener listener;
     
-    private ClientsCheckerProducer clientsProducer = new ClientsCheckerProducer();
+    private ClientValidatorFactory clientsProducer = new ClientValidatorFactory();
     
     private AccessType access;
     

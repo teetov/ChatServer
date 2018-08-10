@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import com.teetov.chat.message.StatusList;
 import com.teetov.chat.message.Message;
 import com.teetov.chat.message.MessageProtocol;
-import com.teetov.chat.server.clientbase.ClientsBaseNotFound;
+import com.teetov.chat.server.clientbase.ClientbaseException;
 import com.teetov.chat.server.context.AccessType;
 import com.teetov.chat.server.context.ServerContext;
 
@@ -146,7 +146,7 @@ public class ConnectionThread implements Runnable {
             
             try {
                 checker.correctLogin(name, password);
-            } catch (ClientsBaseNotFound e) {
+            } catch (ClientbaseException e) {
                 logger.error("[{}] Client base missing", name, e);
             }
             
